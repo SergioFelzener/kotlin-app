@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "866568180201",
+    "firebase_url": "https://redditcover-6262b.firebaseio.com",
+    "project_id": "redditcover-6262b",
+    "storage_bucket": "redditcover-6262b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866568180201:android:4c6d2fd93b950af13f3b78",
+        "android_client_info": {
+          "package_name": "br.senac.redditcover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866568180201-ee3no23l043hf5493c11t2mc1oj84ins.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS7laEbTtHvSwXi9VGOnQcglxtHKPvIPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866568180201-ee3no23l043hf5493c11t2mc1oj84ins.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
