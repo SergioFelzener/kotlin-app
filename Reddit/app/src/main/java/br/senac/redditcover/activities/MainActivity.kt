@@ -8,6 +8,8 @@ import br.senac.redditcover.R
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Autenticado", Toast.LENGTH_LONG).show()
 
         }
+        
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
