@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "866568180201",
-    "firebase_url": "https://redditcover-6262b.firebaseio.com",
-    "project_id": "redditcover-6262b",
-    "storage_bucket": "redditcover-6262b.appspot.com"
+    "project_number": "436544414805",
+    "firebase_url": "https://redditkotlin.firebaseio.com",
+    "project_id": "redditkotlin",
+    "storage_bucket": "redditkotlin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:866568180201:android:4c6d2fd93b950af13f3b78",
+        "mobilesdk_app_id": "1:436544414805:android:c7d9205b23499ff0e7a0dc",
         "android_client_info": {
           "package_name": "br.senac.redditcover"
         }
       },
       "oauth_client": [
         {
-          "client_id": "866568180201-ee3no23l043hf5493c11t2mc1oj84ins.apps.googleusercontent.com",
+          "client_id": "436544414805-krpstaj1gdd1oijuv9uo12fd7lg6oc1l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCS7laEbTtHvSwXi9VGOnQcglxtHKPvIPM"
+          "current_key": "AIzaSyDP3idVz5NMy_YboRiLGehRTZ0BAlxkDV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "866568180201-ee3no23l043hf5493c11t2mc1oj84ins.apps.googleusercontent.com",
+              "client_id": "436544414805-krpstaj1gdd1oijuv9uo12fd7lg6oc1l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
