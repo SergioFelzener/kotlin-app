@@ -11,15 +11,13 @@ import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-<<<<<<< HEAD
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.post_dialog.*
-=======
-import kotlinx.android.synthetic.main.activity_main.*
 
->>>>>>> 16c3e1b753bd91f12335dfdafed771c5d41eee03
+
+
 
 class MainActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -46,8 +44,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Autenticado", Toast.LENGTH_LONG).show()
 
         }
-<<<<<<< HEAD
-
         // Fab to add a new post
         addPostFab.setOnClickListener {
             addPost()
@@ -83,9 +79,7 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancelar", null)
                 .create()
                 .show()
-=======
-        
->>>>>>> 16c3e1b753bd91f12335dfdafed771c5d41eee03
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
