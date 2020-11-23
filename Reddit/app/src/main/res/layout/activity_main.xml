@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+    <ScrollView
+        android:id="@+id/postsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addPostFab"
         android:layout_width="0dp"
@@ -21,4 +36,5 @@
         app:maxImageSize="30dp"
         app:rippleColor="#FFFFFF"
         app:srcCompat="@drawable/ic_baseline_add_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
