@@ -3,6 +3,7 @@ package br.senac.redditcover.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -11,15 +12,11 @@ import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-<<<<<<< HEAD
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.post_card.view.*
 import kotlinx.android.synthetic.main.post_dialog.*
-=======
-import kotlinx.android.synthetic.main.activity_main.*
 
->>>>>>> 16c3e1b753bd91f12335dfdafed771c5d41eee03
 
 class MainActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -46,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Autenticado", Toast.LENGTH_LONG).show()
 
         }
-<<<<<<< HEAD
 
         // Fab to add a new post
         addPostFab.setOnClickListener {
@@ -64,12 +60,12 @@ class MainActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this)
                 .setTitle("Add post")
-                .setView(nameField)
+                .setView(R.layout.post_dialog)
                 .setPositiveButton("Postar") { dialog, button ->
 
                     val post = Post(
-                        name = nameField.text.toString(),
-                        description = "description"
+                        name = postNameText.text.toString(),
+                        description =  postDescriptionText.text.toString()
 
                     )
 
@@ -83,9 +79,21 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancelar", null)
                 .create()
                 .show()
-=======
-        
->>>>>>> 16c3e1b753bd91f12335dfdafed771c5d41eee03
+    }
+
+    fun updateScreen(posts: List<Post>) {
+        postsContainer.removeAllViews()
+
+        posts.forEach {
+
+            val postCard = layoutInflater.inflate(R.layout.post_card, postsContainer, false)
+
+            postCard.postNameTextField.text = it.name
+            postCard.postDescriptionTextField.text = it.description
+
+            postsContainer.addView(postCard)
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -115,10 +123,54 @@ class MainActivity : AppCompatActivity() {
 
         // if user logged in get firebase reference
         user?.let{
+            //Reference is only the current user -> .child(user.id)
             database = FirebaseDatabase.getInstance().reference.child(user.uid)
+
+            val firebaseDataEventListener = object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+
+                    Log.w("main_activity", "configureFirebase", error.toException())
+
+                    Toast.makeText(this@MainActivity, "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    val currentPosts = convertFirebaseSnapshot(snapshot)
+                    updateScreen(currentPosts)
+                }
+
+
+            }
+
+            database?.addValueEventListener(firebaseDataEventListener)
         }
 
 
+    }
+
+    fun convertFirebaseSnapshot(snapshot: DataSnapshot): List<Post> {
+
+            val postsList = arrayListOf<Post>()
+
+            // forEach child inside the current snapshot, set a post to postsList
+            snapshot.child("posts").children.forEach {
+
+             val map = it.getValue() as HashMap<String, Any>
+
+                val id = map.get("id") as String
+                val name = map.get("name") as String
+                val description = map.get("description") as String
+                val liked = map.get("liked") as Boolean
+
+                val post = Post(id, name, description)
+
+                postsList.add(post)
+
+            }
+
+            return postsList
     }
 
 }
