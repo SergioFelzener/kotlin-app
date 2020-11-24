@@ -13,10 +13,11 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.post_card.view.*
 import kotlinx.android.synthetic.main.post_dialog.*
-
 
 class MainActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             postsContainer.addView(postCard)
 
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
