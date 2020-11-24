@@ -63,13 +63,13 @@ class MainActivity : AppCompatActivity() {
                 .setView(R.layout.post_dialog)
                 .setPositiveButton("Postar") { dialog, button ->
 
-                    val post = Post(
+                    var post = Post(
                         name = postNameText.text.toString(),
                         description =  postDescriptionText.text.toString()
 
                     )
 
-                    val newPost = database?.child("posts")?.push()
+                    var newPost = database?.child("posts")?.push()
 
                     post.id = newPost?.key
 
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancelar", null)
                 .create()
                 .show()
+
     }
 
     fun updateScreen(posts: List<Post>) {
@@ -124,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         // if user logged in get firebase reference
         user?.let{
             //Reference is only the current user -> .child(user.id)
-            database = FirebaseDatabase.getInstance().reference.child(user.uid)
+            database = FirebaseDatabase.getInstance().reference.child(it.uid)
 
             val firebaseDataEventListener = object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
@@ -137,8 +138,8 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    val currentPosts = convertFirebaseSnapshot(snapshot)
-                    updateScreen(currentPosts)
+                    updateScreen(convertFirebaseSnapshot(snapshot))
+
                 }
 
 
@@ -162,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                 val id = map.get("id") as String
                 val name = map.get("name") as String
                 val description = map.get("description") as String
-                val liked = map.get("liked") as Boolean
+                // val liked = map.get("liked") as Boolean
 
                 val post = Post(id, name, description)
 
