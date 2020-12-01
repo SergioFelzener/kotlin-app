@@ -6,15 +6,14 @@ import android.util.Log
 import android.widget.Toast
 import br.senac.redditcover.R
 import br.senac.redditcover.model.Post
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.post_card.view.*
 
 class HomeActivity : AppCompatActivity() {
+    var database: DatabaseReference? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -80,6 +79,16 @@ class HomeActivity : AppCompatActivity() {
 
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
+
+            postCard.deleteIcon.setOnClickListener { view ->
+
+                it.id?.let {id ->
+                    val item = database?.child("posts")?.child(id)
+
+                    item?.removeValue()
+                }
+
+            }
 
             allPostsList.addView(postCard)
 

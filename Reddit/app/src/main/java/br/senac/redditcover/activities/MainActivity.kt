@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import br.senac.redditcover.R
@@ -56,17 +57,26 @@ class MainActivity : AppCompatActivity() {
     fun addPost() {
 
         //Set layout into dialog
-        val nameField = EditText(this)
+        var nameField = EditText(this)
         nameField.hint = "Nome do seu post"
+
+        var descriptionField = EditText(this)
+        nameField.hint = "Digite aqui"
+
+        var layoutView = LinearLayout(this)
+        layoutView.setOrientation(LinearLayout.VERTICAL)
+
+        layoutView.addView(nameField)
+        layoutView.addView(descriptionField)
 
         AlertDialog.Builder(this)
                 .setTitle("Add post")
-                .setView(R.layout.post_dialog)
+                .setView(layoutView)
                 .setPositiveButton("Postar") { dialog, button ->
 
                     var post = Post(
-                        name = postNameText.text.toString(),
-                        description =  postDescriptionText.text.toString()
+                        name = nameField.text.toString(),
+                        description =  descriptionField.text.toString()
 
                     )
 
@@ -92,6 +102,16 @@ class MainActivity : AppCompatActivity() {
 
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
+
+            postCard.deleteIcon.setOnClickListener { view ->
+
+                it.id?.let {id ->
+                    val item = database?.child("posts")?.child(id)
+
+                    item?.removeValue()
+                }
+
+            }
 
             postsContainer.addView(postCard)
 

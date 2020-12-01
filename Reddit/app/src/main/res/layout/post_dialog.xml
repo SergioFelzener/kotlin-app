@@ -6,33 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <EditText
-        android:id="@+id/postNameText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:hint="Nome do post"
-        android:inputType="textPersonName|text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/inputsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/postDescriptionText"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Digite aqui"
-        android:inputType="textMultiLine|text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postNameText" />
+        <EditText
+            android:id="@+id/postNameText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="15dp"
+            android:ems="10"
+            android:hint="Nome do post"
+            android:inputType="textPersonName|text" />
+
+        <EditText
+            android:id="@+id/postDescriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Digite aqui"
+            android:inputType="textMultiLine|text" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
