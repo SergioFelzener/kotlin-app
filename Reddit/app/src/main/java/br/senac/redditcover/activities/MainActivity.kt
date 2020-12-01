@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import br.senac.redditcover.R
@@ -56,21 +57,30 @@ class MainActivity : AppCompatActivity() {
     fun addPost() {
 
         //Set layout into dialog
-        val nameField = EditText(this)
+        var nameField = EditText(this)
         nameField.hint = "Nome do seu post"
+
+        var descriptionField = EditText(this)
+        nameField.hint = "Digite aqui"
+
+        var layoutView = LinearLayout(this)
+        layoutView.setOrientation(LinearLayout.VERTICAL)
+
+        layoutView.addView(nameField)
+        layoutView.addView(descriptionField)
 
         AlertDialog.Builder(this)
                 .setTitle("Add post")
-                .setView(R.layout.post_dialog)
+                .setView(layoutView)
                 .setPositiveButton("Postar") { dialog, button ->
 
-                    val post = Post(
-                        name = postNameText.text.toString(),
-                        description =  postDescriptionText.text.toString()
+                    var post = Post(
+                        name = nameField.text.toString(),
+                        description =  descriptionField.text.toString()
 
                     )
 
-                    val newPost = database?.child("posts")?.push()
+                    var newPost = database?.child("posts")?.push()
 
                     post.id = newPost?.key
 
@@ -80,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancelar", null)
                 .create()
                 .show()
+
     }
 
     fun updateScreen(posts: List<Post>) {
@@ -91,6 +102,16 @@ class MainActivity : AppCompatActivity() {
 
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
+
+            postCard.deleteIcon.setOnClickListener { view ->
+
+                it.id?.let {id ->
+                    val item = database?.child("posts")?.child(id)
+
+                    item?.removeValue()
+                }
+
+            }
 
             postsContainer.addView(postCard)
 
@@ -126,7 +147,7 @@ class MainActivity : AppCompatActivity() {
         // if user logged in get firebase reference
         user?.let{
             //Reference is only the current user -> .child(user.id)
-            database = FirebaseDatabase.getInstance().reference.child(user.uid)
+            database = FirebaseDatabase.getInstance().reference.child(it.uid)
 
             val firebaseDataEventListener = object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
@@ -139,8 +160,8 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    val currentPosts = convertFirebaseSnapshot(snapshot)
-                    updateScreen(currentPosts)
+                    updateScreen(convertFirebaseSnapshot(snapshot))
+
                 }
 
 
@@ -164,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 val id = map.get("id") as String
                 val name = map.get("name") as String
                 val description = map.get("description") as String
-                val liked = map.get("liked") as Boolean
+                // val liked = map.get("liked") as Boolean
 
                 val post = Post(id, name, description)
 

@@ -1,63 +1,34 @@
 {
   "project_info": {
-    "project_number": "649264789989",
-    "firebase_url": "https://reddit-trabalho.firebaseio.com",
-    "project_id": "reddit-trabalho",
-    "storage_bucket": "reddit-trabalho.appspot.com"
+    "project_number": "436544414805",
+    "firebase_url": "https://redditkotlin.firebaseio.com",
+    "project_id": "redditkotlin",
+    "storage_bucket": "redditkotlin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:649264789989:android:17784b5a2708c4c0c6970c",
-        "android_client_info": {
-          "package_name": "br.aulas.pi4mobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "649264789989-p4ns4shnbgi8inmhp4cds0vdohb2vtbv.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC11aoia9UrJnQRslrjf9wwgRWmh0NZvwE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "649264789989-p4ns4shnbgi8inmhp4cds0vdohb2vtbv.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:649264789989:android:a706b0ed7432116cc6970c",
+        "mobilesdk_app_id": "1:436544414805:android:c7d9205b23499ff0e7a0dc",
         "android_client_info": {
           "package_name": "br.senac.redditcover"
         }
       },
       "oauth_client": [
         {
-          "client_id": "649264789989-p4ns4shnbgi8inmhp4cds0vdohb2vtbv.apps.googleusercontent.com",
+          "client_id": "436544414805-krpstaj1gdd1oijuv9uo12fd7lg6oc1l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC11aoia9UrJnQRslrjf9wwgRWmh0NZvwE"
+          "current_key": "AIzaSyDP3idVz5NMy_YboRiLGehRTZ0BAlxkDV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "649264789989-p4ns4shnbgi8inmhp4cds0vdohb2vtbv.apps.googleusercontent.com",
+              "client_id": "436544414805-krpstaj1gdd1oijuv9uo12fd7lg6oc1l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

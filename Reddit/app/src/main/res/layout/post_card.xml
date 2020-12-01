@@ -28,6 +28,13 @@
             android:layout_margin="10dp"
             android:layout_weight="1" />
 
+        <CheckBox
+            android:id="@+id/favoriteCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Favoritar" />
+
         <ImageView
             android:id="@+id/deleteIcon"
             android:layout_width="wrap_content"
