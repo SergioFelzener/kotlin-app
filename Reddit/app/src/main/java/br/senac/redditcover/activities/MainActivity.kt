@@ -6,9 +6,14 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentTransaction
 import br.senac.redditcover.R
+import br.senac.redditcover.fragments.CategoriesFragment
+import br.senac.redditcover.fragments.HomeFragment
+import br.senac.redditcover.fragments.ProfileFragment
 import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -20,6 +25,10 @@ import kotlinx.android.synthetic.main.post_dialog.*
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var profileFragment: ProfileFragment
+    lateinit var categoriesFragment: CategoriesFragment
+    lateinit var homeFragment: HomeFragment
+
     var database: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,46 +50,48 @@ class MainActivity : AppCompatActivity() {
 
         }else {
             configureFirebase()
-            Toast.makeText(this, "Autenticado", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Autenticado", Toast.LENGTH_SHORT).show()
 
         }
-        // Fab to add a new post
-        addPostFab.setOnClickListener {
-            addPost()
-        }
 
-    }
+        val fragment = HomeFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_layout, fragment).commit()
 
-    // fun to create a new post
-    fun addPost() {
+        val bottomNavigationView : BottomNavigationView = findViewById(R.id.btn_nav)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
 
-        //Set layout into dialog
-        val nameField = EditText(this)
-        nameField.hint = "Nome do seu post"
-
-        AlertDialog.Builder(this)
-                .setTitle("Add post")
-                .setView(nameField)
-                .setPositiveButton("Postar") { dialog, button ->
-
-                    val post = Post(
-                        name = nameField.text.toString(),
-                        description = "description"
-
-                    )
-
-                    val newPost = database?.child("posts")?.push()
-
-                    post.id = newPost?.key
-
-                    newPost?.setValue(post)
-
+            when(item.itemId){
+                R.id.home->{
+                    homeFragment = HomeFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.frame_layout, homeFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
                 }
-                .setNegativeButton("Cancelar", null)
-                .create()
-                .show()
+                R.id.categories->{
+                    categoriesFragment = CategoriesFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.frame_layout, categoriesFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                }
+                R.id.profile->{
+                    profileFragment = ProfileFragment()
+                    supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.frame_layout, profileFragment)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                }
+            }
+            true
 
+        }
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

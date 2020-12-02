@@ -7,6 +7,7 @@ data class Post (
         var description: String,
         var isLiked: Boolean = false
 
+
 )
 
 
