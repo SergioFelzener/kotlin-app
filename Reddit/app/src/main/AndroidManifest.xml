@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RedditCover">
         <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.RoomPostActivity"></activity>
         <activity android:name=".activities.MainActivity" />
         <activity
             android:name=".activities.Slides"
