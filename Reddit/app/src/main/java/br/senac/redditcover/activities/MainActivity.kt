@@ -94,27 +94,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateScreen(posts: List<Post>) {
-        postsContainer.removeAllViews()
+        postsScrol.removeAllViews()
 
         posts.forEach {
 
-            val postCard = layoutInflater.inflate(R.layout.post_card, postsContainer, false)
-
+            var postCard = layoutInflater.inflate(
+                    R.layout.post_card,
+                    postsScrol,
+                    false
+            )
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
 
             postCard.deleteIcon.setOnClickListener { view ->
 
-                it.id?.let {id ->
+                it.id?.let { id ->
                     val item = database?.child("posts")?.child(id)
 
                     item?.removeValue()
                 }
-
+                postsContainer.removeView(view)
             }
 
-            postsContainer.addView(postCard)
-
+            postsScrol.addView(postCard)
         }
 
     }
