@@ -2,25 +2,23 @@ package br.senac.redditcover.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import br.senac.redditcover.R
 import br.senac.redditcover.fragments.CategoriesFragment
 import br.senac.redditcover.fragments.HomeFragment
+import br.senac.redditcover.fragments.MyPostsFragment
 import br.senac.redditcover.fragments.ProfileFragment
-import br.senac.redditcover.model.Post
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.post_card.view.*
+
 
 class HomeActivity : AppCompatActivity() {
-    var database: DatabaseReference? = null
+
     lateinit var categoriesFragment: CategoriesFragment
     lateinit var homeFragment: HomeFragment
     lateinit var profileFragment: ProfileFragment
+    lateinit var myPostsFragment: MyPostsFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -46,11 +44,19 @@ class HomeActivity : AppCompatActivity() {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit()
                 }
+                R.id.myposts ->{
+                    myPostsFragment = MyPostsFragment()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, myPostsFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+                }
                 R.id.profile ->{
                     profileFragment = ProfileFragment()
                     supportFragmentManager
                             .beginTransaction()
-                            .replace(R.id.frame_layout, categoriesFragment)
+                            .replace(R.id.frame_layout, profileFragment)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit()
                 }

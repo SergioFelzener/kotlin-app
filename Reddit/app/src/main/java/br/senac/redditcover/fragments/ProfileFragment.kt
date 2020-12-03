@@ -1,11 +1,18 @@
 package br.senac.redditcover.fragments
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import br.senac.redditcover.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import kotlinx.android.synthetic.main.fragment_profile.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,12 +25,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    var database: DatabaseReference? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
+        btnLogout.setOnClickListener {
+            //instancia firebase Auth
+            FirebaseAuth.getInstance().signOut()
+        }
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -34,5 +42,4 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
-
 }

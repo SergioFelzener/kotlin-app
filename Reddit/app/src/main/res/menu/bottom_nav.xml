@@ -8,6 +8,10 @@
         android:title="Categories"
         android:icon="@drawable/ic_action_categories"/>
 
+    <item android:id="@+id/myposts"
+        android:title="My Posts"
+        android:icon="@drawable/ic_action_posts"/>
+
     <item android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/ic_action_profile"/>
