@@ -37,7 +37,7 @@ class Slides : IntroActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        var intent = Intent(this, MainActivity::class.java )
+        var intent = Intent(this, HomeActivity::class.java )
         startActivity(intent)
         finish()
     }
