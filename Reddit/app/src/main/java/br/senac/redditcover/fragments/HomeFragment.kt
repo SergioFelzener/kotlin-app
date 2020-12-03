@@ -20,6 +20,10 @@ import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.post_card.view.*
+import kotlinx.android.synthetic.main.post_card.view.favoriteCheckBox
+import kotlinx.android.synthetic.main.post_card.view.postDescriptionTextField
+import kotlinx.android.synthetic.main.post_card.view.postNameTextField
+import kotlinx.android.synthetic.main.post_card_all.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,14 +84,18 @@ class HomeFragment : Fragment() {
     }
 
     fun updateScreen(posts: List<Post>) {
-        allPostsList.removeAllViews()
+
 
         posts.forEach {
 
-            val postCard = layoutInflater.inflate(R.layout.post_card_all, postsContainer, false)
+            val postCard = layoutInflater.inflate(R.layout.post_card_all, allPostsList, false)
 
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
+            postCard.favoriteCheckBox.setOnClickListener {
+
+            }
+
             allPostsList.addView(postCard)
 
         }

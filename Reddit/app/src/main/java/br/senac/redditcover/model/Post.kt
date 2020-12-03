@@ -10,6 +10,7 @@ data class Post(
         var description: String,
         var isLiked: Boolean = false,
         var user_id: String,
+        var category: Category? = null,
         var comments: List<Comment>? = null
 
 )

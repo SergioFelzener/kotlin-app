@@ -1,22 +1,33 @@
 package br.senac.redditcover.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import br.senac.redditcover.R
+import br.senac.redditcover.activities.AddPostActivity
+import br.senac.redditcover.api.RetrofitClient
+import br.senac.redditcover.model.Category
 import br.senac.redditcover.model.Post
+import com.firebase.ui.auth.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.addPostFab
+import kotlinx.android.synthetic.main.activity_main.postsContainer
+import kotlinx.android.synthetic.main.activity_main.postsScrol
+import kotlinx.android.synthetic.main.fragment_my_posts.*
 import kotlinx.android.synthetic.main.post_card.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,60 +48,18 @@ class MyPostsFragment : Fragment() {
         configureFirebase()
         // Fab to add a new post
         addPostFab.setOnClickListener {
-            addPost()
+            val i = Intent(context, AddPostActivity::class.java)
+            startActivity(i)
         }
-
-
         super.onActivityCreated(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_posts, container, false)
-    }
-
-    fun addPost() {
-
-        //Set layout into dialog
-        var nameField = EditText(context)
-        nameField.hint = "Nome do seu post"
-
-        var descriptionField = EditText(context)
-        nameField.hint = "Digite aqui"
-
-        var layoutView = LinearLayout(context)
-        layoutView.setOrientation(LinearLayout.VERTICAL)
-
-        layoutView.addView(nameField)
-        layoutView.addView(descriptionField)
-
-        AlertDialog.Builder(requireContext())
-            .setTitle("Add post")
-            .setView(layoutView)
-            .setPositiveButton("Postar") { dialog, button ->
-
-                var post = Post(
-                    name = nameField.text.toString(),
-                    description =  descriptionField.text.toString(),
-                    user_id = getCurrentUser()?.uid.toString()
-
-
-                )
-
-                var newPost = database?.child("posts")?.push()
-
-                post.id = newPost?.key
-
-                newPost?.setValue(post)
-
-            }
-            .setNegativeButton("Cancelar", null)
-            .create()
-            .show()
-
     }
 
     fun updateScreen(posts: List<Post>) {
@@ -99,9 +68,9 @@ class MyPostsFragment : Fragment() {
         posts.forEach {
 
             var postCard = layoutInflater.inflate(
-                R.layout.post_card,
-                postsScrol,
-                false
+                    R.layout.post_card,
+                    postsScrol,
+                    false
             )
             postCard.postNameTextField.text = it.name
             postCard.postDescriptionTextField.text = it.description
