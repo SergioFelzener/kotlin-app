@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.post_card.view.*
-import kotlinx.android.synthetic.main.post_dialog.*
 
 class MainActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -76,7 +75,9 @@ class MainActivity : AppCompatActivity() {
 
                     var post = Post(
                         name = nameField.text.toString(),
-                        description =  descriptionField.text.toString()
+                        description =  descriptionField.text.toString(),
+                            user_id = getCurrentUser()?.uid.toString()
+
 
                     )
 
@@ -187,9 +188,10 @@ class MainActivity : AppCompatActivity() {
                 val id = map.get("id") as String
                 val name = map.get("name") as String
                 val description = map.get("description") as String
+                val user_id = map.get("user_id") as String
                 // val liked = map.get("liked") as Boolean
 
-                val post = Post(id, name, description)
+                val post = Post(id, name, description, user_id = user_id)
 
                 postsList.add(post)
 
