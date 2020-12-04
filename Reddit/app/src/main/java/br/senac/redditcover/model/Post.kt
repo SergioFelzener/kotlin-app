@@ -1,8 +1,9 @@
 package br.senac.redditcover.model
 
-import com.firebase.ui.auth.data.model.User
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Post(
         var id: String? = null,
         var name: String? = null,
@@ -12,6 +13,6 @@ data class Post(
         var category: Category? = null,
         var comments: List<Comment>? = null
 
-)
+) : Parcelable
 
 
