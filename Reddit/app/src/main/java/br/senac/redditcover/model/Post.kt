@@ -1,12 +1,18 @@
 package br.senac.redditcover.model
 
-data class Post (
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+data class Post(
         var id: String? = null,
-        var name: String,
-        var description: String,
-        var isLiked: Boolean = false
+        var name: String? = null,
+        var description: String? = null,
+        var liked: Boolean = false,
+        var user_id: String? = null,
+        var category: Category? = null,
+        var comments: List<Comment>? = null
 
-)
+) : Parcelable
 
 
