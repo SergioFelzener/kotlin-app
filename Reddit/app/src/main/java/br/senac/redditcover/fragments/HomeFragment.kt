@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
 
         }else {
             configureFirebase()
-            Toast.makeText(context, "Autenticado", Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, "Autenticado", Toast.LENGTH_LONG).show()
 
         }
 

@@ -12,6 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color2"
         android:padding="10dp">
 
         <TextView
@@ -19,9 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Categoria"
-            android:textAlignment="center"
+            android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="21sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descCategory"
@@ -29,8 +31,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
             android:text="TextView"
-            android:textAlignment="center"
-            android:textSize="15sp" />
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
 
     </RelativeLayout>
