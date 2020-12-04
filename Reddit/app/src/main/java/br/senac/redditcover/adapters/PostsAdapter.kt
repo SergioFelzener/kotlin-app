@@ -1,11 +1,14 @@
 package br.senac.redditcover.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.senac.redditcover.R
+import br.senac.redditcover.activities.RoomPostActivity
 import br.senac.redditcover.model.Post
+import br.senac.redditcover.model.RoomPost
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.ObservableSnapshotArray
@@ -19,11 +22,16 @@ class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdap
         : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
         fun bind(post: Post){
+            // Log.i("post", post.toString())
             containerView.postNane.text = post.name
             containerView.tvPostDescription.text = post.description
             containerView.favoriteCheckBox.isChecked = post.isLiked
             containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
                 snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
+
+                var roomPost = RoomPost(id = post.id!! ,name = post.name, description = post.description, isLiked = post.isLiked, user_id = post.user_id, category = post.category.toString(), comments = post.comments.toString())
+
+                RoomPostActivity().insertFavoritePost(roomPost)
             }
         }
 

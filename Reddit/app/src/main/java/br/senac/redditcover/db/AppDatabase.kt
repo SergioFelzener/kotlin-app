@@ -10,6 +10,4 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun postDao(): PostDao
 
 
-
-
 }
