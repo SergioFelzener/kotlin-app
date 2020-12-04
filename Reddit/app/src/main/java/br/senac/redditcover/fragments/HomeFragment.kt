@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
 
         }
 
+
         Log.i("Error", database?.root.toString())
         super.onCreate(savedInstanceState)
     }
@@ -103,14 +104,14 @@ class HomeFragment : Fragment() {
 
                         val post = RoomPost(
                             user_id = getCurrentUser()?.uid.toString(),
-                            description = etDesc.text.toString(),
-                            name = etName.text.toString()
+                            description = it.description.toString(),
+                            name = it.name.toString()
                         )
                         Thread {
 
                             insertPost(requireContext(), post)
-                            Toast.makeText(context, "Post Salvo no ROOM", Toast.LENGTH_SHORT).show()
-                            activity?.finish()
+//                            Toast.makeText(requireContext(), "Post Salvo no ROOM", Toast.LENGTH_SHORT).show()
+                            activity?.finishActivity(0)
 
                         }.start()
 
@@ -126,7 +127,6 @@ class HomeFragment : Fragment() {
 
         }
 
-    }
 
 
     fun getCurrentUser(): FirebaseUser? {
@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
         return auth.currentUser
 
     }
-    fun configureFirebase(context: Context) {
+    fun configureFirebase() {
         val user = getCurrentUser()
 
         //Reference to all posts
@@ -187,6 +187,7 @@ class HomeFragment : Fragment() {
 
         db.postDao().insert(post)
     }
+
 
 }
 
