@@ -4,12 +4,11 @@ import com.firebase.ui.auth.data.model.User
 
 
 data class Post(
-
         var id: String? = null,
-        var name: String,
-        var description: String,
+        var name: String? = null,
+        var description: String? = null,
         var isLiked: Boolean = false,
-        var user_id: String,
+        var user_id: String? = null,
         var category: Category? = null,
         var comments: List<Comment>? = null
 

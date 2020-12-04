@@ -9,21 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.senac.redditcover.R
+import br.senac.redditcover.adapters.PostsAdapter
 import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.post_card.view.*
-import kotlinx.android.synthetic.main.post_card.view.favoriteCheckBox
-import kotlinx.android.synthetic.main.post_card.view.postDescriptionTextField
-import kotlinx.android.synthetic.main.post_card.view.postNameTextField
-import kotlinx.android.synthetic.main.post_card_all.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
     var database: DatabaseReference? = null
-
+    var adapter: PostsAdapter? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         if(getCurrentUser() == null ) {
 
@@ -83,24 +78,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun updateScreen(posts: List<Post>) {
-
-
-        posts.forEach {
-
-            val postCard = layoutInflater.inflate(R.layout.post_card_all, allPostsList, false)
-
-            postCard.postNameTextField.text = it.name
-            postCard.postDescriptionTextField.text = it.description
-            postCard.favoriteCheckBox.setOnClickListener {
-
-            }
-
-            allPostsList.addView(postCard)
-
-        }
-    }
-
     fun getCurrentUser(): FirebaseUser? {
 
         //instancia firebase Auth
@@ -112,43 +89,33 @@ class HomeFragment : Fragment() {
         val user = getCurrentUser()
 
         //Reference to all posts
-        val database = FirebaseDatabase.getInstance().reference
+        user?.let {
+            database = FirebaseDatabase.getInstance().reference.child(user.uid)
 
-        val firebaseDataEventListener = object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
+            database?.let {
+                val options = FirebaseRecyclerOptions.Builder<Post>()
+                    .setQuery(it.child("posts"), Post::class.java)
+                    .build()
 
-                Log.w("home_activity", "configureFirebase", error.toException())
+                adapter = PostsAdapter(options)
+                listPosts.layoutManager = LinearLayoutManager(context)
+                listPosts.adapter = adapter
 
-                Toast.makeText(context, "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
-
+                adapter?.startListening()
             }
-            override fun onDataChange(snapshot: DataSnapshot) {
-                updateScreen(convertFirebaseSnapshot(snapshot))
-            }
-
         }
-
-        database.addValueEventListener(firebaseDataEventListener)
 
     }
 
-    fun convertFirebaseSnapshot(snapshot: DataSnapshot): List<Post> {
-
-        val postsList = arrayListOf<Post>()
-
-        // forEach child inside the current snapshot
-        snapshot.children.forEach {
-
-                it.child("posts").children.forEach {
-                    val id = it.child("id").value.toString()
-                    val name = it.child("name").value.toString()
-                    val description = it.child("description").value.toString()
-                    val user_id = it.child("user_id").value.toString()
-                    val post = Post(id, name, description, user_id = user_id)
-                    postsList.add(post)
-                }
-        }
-
-        return postsList
+    override fun onStop() {
+        super.onStop()
+        adapter?.stopListening()
     }
+
+    override fun onResume() {
+        super.onResume()
+        adapter?.startListening()
+
+    }
+
 }

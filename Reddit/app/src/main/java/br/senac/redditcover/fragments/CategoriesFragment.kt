@@ -40,8 +40,12 @@ class CategoriesFragment : Fragment() {
                     for (c in categories){
                         category.add(c)
                     }
-                    categoriesAdapter = CategoriesAdapter(requireContext(), category)
-                    this@CategoriesFragment.grid_categories.adapter = categoriesAdapter
+
+                    if (category.isNotEmpty()){
+                        categoriesAdapter = CategoriesAdapter(requireContext(), category)
+                        this@CategoriesFragment.grid_categories.adapter = categoriesAdapter
+                    }
+
 
                 }
 

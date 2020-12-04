@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "https://crudcrud.com/api/2361e2e86959497ca6146fceaaa59a2b/"
+    private const val BASE_URL = "https://crudcrud.com/api/c8f60407a7824b7ebbb3f284c64bfcd9/"
 
     private val okHttpClient= OkHttpClient.Builder()
         .addInterceptor { chain ->
