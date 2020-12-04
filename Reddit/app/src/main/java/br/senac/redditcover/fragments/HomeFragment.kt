@@ -2,18 +2,23 @@ package br.senac.redditcover.fragments
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import br.senac.redditcover.R
 import br.senac.redditcover.adapters.PostsAdapter
+import br.senac.redditcover.db.AppDatabase
 import br.senac.redditcover.model.Category
 import br.senac.redditcover.model.Post
+import br.senac.redditcover.model.RoomPost
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -37,6 +42,7 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
     var database: DatabaseReference? = null
     var adapter: PostsAdapter? = null
+    var atualPostParaRoom: RoomPost? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
         if(getCurrentUser() == null ) {
@@ -56,6 +62,7 @@ class HomeFragment : Fragment() {
             //Toast.makeText(context, "Autenticado", Toast.LENGTH_LONG).show()
 
         }
+
 
         Log.i("Error", database?.root.toString())
         super.onCreate(savedInstanceState)
@@ -93,11 +100,34 @@ class HomeFragment : Fragment() {
                 postCard.tvPostDescription.text = it.description
                 postCard.CheckboxPostAll.isChecked = it.liked
 
+                postCard.CheckboxPostAll.setOnCheckedChangeListener { buttonView, isChecked ->
+
+                        val post = RoomPost(
+                            user_id = getCurrentUser()?.uid.toString(),
+                            description = it.description.toString(),
+                            name = it.name.toString()
+                        )
+                        Thread {
+
+                            insertPost(requireContext(), post)
+//                            Toast.makeText(requireContext(), "Post Salvo no ROOM", Toast.LENGTH_SHORT).show()
+                            activity?.finishActivity(0)
+
+                        }.start()
+
+
+                    }
+
                 postsScrol.addView(postCard)
+
+                }
+
+
             }
 
         }
-    }
+
+
 
     fun getCurrentUser(): FirebaseUser? {
 
@@ -117,7 +147,7 @@ class HomeFragment : Fragment() {
 
                 Log.w("home_activity", "configureFirebase", error.toException())
 
-                Toast.makeText(requireContext(), "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
 
             }
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -151,4 +181,13 @@ class HomeFragment : Fragment() {
         return postsList
     }
 
+    private fun insertPost (context: Context, post: RoomPost) {
+
+        val db = Room.databaseBuilder(context, AppDatabase::class.java, "AppDb").build()
+
+        db.postDao().insert(post)
+    }
+
+
 }
+

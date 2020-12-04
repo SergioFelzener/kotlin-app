@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey
 @Entity
 data class RoomPost(
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
 
-    var id : String,
-    var user : String,
-    var title : String,
-    var description : String,
+    var id: Int? = null,
+    var name: String? = null,
+    var description: String? = null,
+    var user_id: String? = null,
+    var category: String? = null,
 
 )

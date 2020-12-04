@@ -15,5 +15,10 @@ interface PostDao {
     @Query(value = "SELECT * FROM RoomPost")
     fun listAll(): List<RoomPost>
 
+    @Query("SELECT * FROM RoomPost WHERE id IN (:postId)")
+    fun getPost(postId: String): RoomPost
+
+
+
 
 }

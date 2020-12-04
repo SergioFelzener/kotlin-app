@@ -12,6 +12,10 @@
         android:title="My Posts"
         android:icon="@drawable/ic_action_posts"/>
 
+    <item android:id="@+id/roomPosts"
+        android:title="Room Posts"
+        android:icon="@drawable/ic_action_posts"/>
+
     <item android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/ic_action_profile"/>

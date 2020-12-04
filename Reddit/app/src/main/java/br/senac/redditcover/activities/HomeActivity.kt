@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
 import br.senac.redditcover.R
-import br.senac.redditcover.fragments.CategoriesFragment
-import br.senac.redditcover.fragments.HomeFragment
-import br.senac.redditcover.fragments.MyPostsFragment
-import br.senac.redditcover.fragments.ProfileFragment
+import br.senac.redditcover.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.*
 
@@ -18,6 +15,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var homeFragment: HomeFragment
     lateinit var profileFragment: ProfileFragment
     lateinit var myPostsFragment: MyPostsFragment
+    lateinit var roomFragment: RoomFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +42,15 @@ class HomeActivity : AppCompatActivity() {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .commit()
                 }
+                R.id.roomPosts ->{
+                    roomFragment = RoomFragment()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, roomFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+                }
+
                 R.id.myposts ->{
                     myPostsFragment = MyPostsFragment()
                     supportFragmentManager

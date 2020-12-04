@@ -10,5 +10,7 @@ class RoomPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_room_post)
 
 
+
+
     }
 }
