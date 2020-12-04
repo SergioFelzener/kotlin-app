@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.senac.redditcover.R
+import br.senac.redditcover.activities.AddPostActivity
+import br.senac.redditcover.activities.Slides
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -31,6 +33,7 @@ class ProfileFragment : Fragment() {
         btnLogout.setOnClickListener {
             //instancia firebase Auth
             FirebaseAuth.getInstance().signOut()
+            activity?.finish()
         }
         super.onActivityCreated(savedInstanceState)
     }

@@ -1,5 +1,6 @@
 package br.senac.redditcover.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,9 +42,10 @@ class CategoriesFragment : Fragment() {
                         category.add(c)
                     }
 
-                    if (category.isNotEmpty()){
+                    val activity: Activity? = activity
+                    if (activity != null) {
                         categoriesAdapter = CategoriesAdapter(requireContext(), category)
-                        this@CategoriesFragment.grid_categories.adapter = categoriesAdapter
+                        grid_categories.adapter = categoriesAdapter
                     }
 
 

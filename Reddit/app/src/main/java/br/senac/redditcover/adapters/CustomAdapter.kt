@@ -23,7 +23,7 @@ class CustomAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAda
         fun bind(post: Post){
             containerView.postName.text = post.name
             containerView.postDescription.text = post.description
-            containerView.favoriteCheckBox.isChecked = post.isLiked
+            containerView.favoriteCheckBox.isChecked = post.liked
             containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
                 snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
             }

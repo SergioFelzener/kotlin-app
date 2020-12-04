@@ -12,12 +12,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import br.senac.redditcover.R
 import br.senac.redditcover.adapters.PostsAdapter
+import br.senac.redditcover.model.Category
 import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_add_post.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.post_card.view.*
 import kotlinx.android.synthetic.main.post_card_all.view.*
 
 
@@ -88,8 +91,9 @@ class HomeFragment : Fragment() {
                 val postCard = layoutInflater.inflate(R.layout.post_card_all, postsScrol, false)
                 postCard.postNane.text = it.name
                 postCard.tvPostDescription.text = it.description
+                postCard.CheckboxPostAll.isChecked = it.liked
+
                 postsScrol.addView(postCard)
-                // etc ...
             }
 
         }
@@ -113,7 +117,7 @@ class HomeFragment : Fragment() {
 
                 Log.w("home_activity", "configureFirebase", error.toException())
 
-                Toast.makeText(context, "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
 
             }
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -138,7 +142,8 @@ class HomeFragment : Fragment() {
                 val name = it.child("name").value.toString()
                 val description = it.child("description").value.toString()
                 val user_id = it.child("user_id").value.toString()
-                val post = Post(id, name, description, user_id = user_id)
+                val liked: Boolean = it.child("liked").value as Boolean
+                val post = Post(id, name, description, liked, user_id)
                 postsList.add(post)
             }
         }
