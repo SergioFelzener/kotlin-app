@@ -3,21 +3,24 @@ package br.senac.redditcover.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import br.senac.redditcover.R
 import br.senac.redditcover.api.RetrofitClient
+import br.senac.redditcover.db.AppDatabase
 import br.senac.redditcover.model.Category
 import br.senac.redditcover.model.Post
-import com.firebase.ui.auth.data.model.User
+import br.senac.redditcover.model.RoomPost
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_add_post.*
-import kotlinx.android.synthetic.main.fragment_my_posts.*
+import kotlinx.android.synthetic.main.post_card.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,6 +82,9 @@ class AddPostActivity : AppCompatActivity(){
         }
 
     }
+
+
+
 //    fun getSelectedUser(v: View?): Category? {
 //        val category = spinner.selectedItem as Category
 //        displayUserData(category)
@@ -126,4 +132,5 @@ class AddPostActivity : AppCompatActivity(){
             database?.addValueEventListener(firebaseDataEventListener)
         }
     }
+
 }
