@@ -18,7 +18,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_my_posts.*
+import kotlinx.android.synthetic.main.post_card.view.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,7 +36,7 @@ private const val ARG_PARAM2 = "param2"
 class MyPostsFragment : Fragment() {
 
     var database: DatabaseReference? = null
-    var adapter: CustomAdapter? = null
+    var adapter: PostsAdapter? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         configureFirebase()
@@ -61,11 +63,10 @@ class MyPostsFragment : Fragment() {
         return auth.currentUser
 
     }
-
     fun configureFirebase() {
         val user = getCurrentUser()
 
-        // if user logged in get firebase reference
+        //Reference to all posts
         user?.let {
             database = FirebaseDatabase.getInstance().reference.child(user.uid)
 
@@ -74,12 +75,24 @@ class MyPostsFragment : Fragment() {
                     .setQuery(it.child("posts"), Post::class.java)
                     .build()
 
-                adapter = CustomAdapter(options)
-                rvList.layoutManager = LinearLayoutManager(context)
-                rvList.adapter = adapter
+                adapter = PostsAdapter(options)
+                listPosts.layoutManager = LinearLayoutManager(context)
+                listPosts.adapter = adapter
 
                 adapter?.startListening()
             }
         }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter?.stopListening()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter?.startListening()
+
     }
 }

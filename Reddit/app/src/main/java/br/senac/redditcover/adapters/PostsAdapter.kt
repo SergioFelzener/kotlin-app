@@ -10,7 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.ObservableSnapshotArray
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.post_card_all.view.*
+import kotlinx.android.synthetic.main.post_card.view.*
 
 class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdapter<Post, PostsAdapter.PostViewHolder>(options) {
 
@@ -19,9 +19,12 @@ class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdap
         : RecyclerView.ViewHolder(containerView), LayoutContainer{
 
         fun bind(post: Post){
-            containerView.postNane.text = post.name
-            containerView.tvPostDescription.text = post.description
+            containerView.postName.text = post.name
+            containerView.postDescription.text = post.description
             containerView.favoriteCheckBox.isChecked = post.isLiked
+            containerView.deleteIcon.setOnClickListener {
+                snapshots.getSnapshot(adapterPosition).ref.removeValue()
+            }
             containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
                 snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
             }
@@ -32,7 +35,7 @@ class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  PostViewHolder{
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.post_card_all, parent,false)
+        val view = inflater.inflate(R.layout.post_card, parent,false)
         return PostViewHolder(view, snapshots)
     }
 

@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="0"
+            android:clickable="true"
             app:srcCompat="@drawable/ic_baseline_delete_24" />
 
     </LinearLayout>

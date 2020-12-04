@@ -1,24 +1,25 @@
 package br.senac.redditcover.fragments
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import br.senac.redditcover.R
 import br.senac.redditcover.adapters.PostsAdapter
 import br.senac.redditcover.model.Post
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.post_card_all.view.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +34,8 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
     var database: DatabaseReference? = null
     var adapter: PostsAdapter? = null
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+
         if(getCurrentUser() == null ) {
 
             val providers
@@ -52,8 +54,8 @@ class HomeFragment : Fragment() {
 
         }
 
-        Log.i("Error" , database?.root.toString())
-        super.onActivityCreated(savedInstanceState)
+        Log.i("Error", database?.root.toString())
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -78,6 +80,21 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    fun updateScreen(posts: List<Post>) {
+        posts.forEach {
+            val activity: Activity? = activity
+            if (activity != null) {
+                val postCard = layoutInflater.inflate(R.layout.post_card_all, postsScrol, false)
+                postCard.postNane.text = it.name
+                postCard.tvPostDescription.text = it.description
+                postsScrol.addView(postCard)
+                // etc ...
+            }
+
+        }
+    }
+
     fun getCurrentUser(): FirebaseUser? {
 
         //instancia firebase Auth
@@ -89,33 +106,44 @@ class HomeFragment : Fragment() {
         val user = getCurrentUser()
 
         //Reference to all posts
-        user?.let {
-            database = FirebaseDatabase.getInstance().reference.child(user.uid)
+        val database = FirebaseDatabase.getInstance().reference
 
-            database?.let {
-                val options = FirebaseRecyclerOptions.Builder<Post>()
-                    .setQuery(it.child("posts"), Post::class.java)
-                    .build()
+        val firebaseDataEventListener = object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
 
-                adapter = PostsAdapter(options)
-                listPosts.layoutManager = LinearLayoutManager(context)
-                listPosts.adapter = adapter
+                Log.w("home_activity", "configureFirebase", error.toException())
 
-                adapter?.startListening()
+                Toast.makeText(context, "Erro na conexão com firebase", Toast.LENGTH_LONG).show()
+
+            }
+            override fun onDataChange(snapshot: DataSnapshot) {
+                updateScreen(convertFirebaseSnapshot(snapshot))
+            }
+
+        }
+
+        database.addValueEventListener(firebaseDataEventListener)
+
+    }
+
+    fun convertFirebaseSnapshot(snapshot: DataSnapshot): List<Post> {
+
+        val postsList = arrayListOf<Post>()
+
+        // forEach child inside the current snapshot
+        snapshot.children.forEach {
+
+            it.child("posts").children.forEach {
+                val id = it.child("id").value.toString()
+                val name = it.child("name").value.toString()
+                val description = it.child("description").value.toString()
+                val user_id = it.child("user_id").value.toString()
+                val post = Post(id, name, description, user_id = user_id)
+                postsList.add(post)
             }
         }
 
-    }
-
-    override fun onStop() {
-        super.onStop()
-        adapter?.stopListening()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adapter?.startListening()
-
+        return postsList
     }
 
 }

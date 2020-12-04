@@ -74,6 +74,8 @@ class AddPostActivity : AppCompatActivity(){
 
             newPost?.setValue(post)
 
+            val i = Intent(this, HomeActivity::class.java)
+            startActivity(i)
         }
 
     }
