@@ -35,20 +35,20 @@ class RoomFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
                 val thread = Thread {
-           getPost(requireContext())
-//
-//                for (p in posts) {
-//                    val activity: Activity? = activity
-//                    if (activity != null) {
-//                        val postCard =
-//                            layoutInflater.inflate(R.layout.post_card_all, roomPostsLayout, false)
-//                        postCard.postNane.text = p.name
-//                        postCard.tvPostDescription.text = p.description
-//                        roomPostsLayout.addView(postCard)
-//                    }
-//                }
-//
-        }
+                    var posts = getPost(requireContext())
+                activity?.runOnUiThread {
+                    for (p in posts) {
+                        val activity: Activity? = activity
+                        if (activity != null) {
+                            val postCard =
+                                layoutInflater.inflate(R.layout.post_card_all, roomPostsLayout, false)
+                            postCard.postNane.text = p.name
+                            postCard.tvPostDescription.text = p.description
+                            roomPostsLayout.addView(postCard)
+                        }
+                    }
+                }
+            }
         thread.start()
         super.onActivityCreated(savedInstanceState)
 
