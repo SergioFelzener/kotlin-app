@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/favoriteCheckBox"
+            android:id="@+id/checkBoxPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"

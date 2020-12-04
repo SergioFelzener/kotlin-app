@@ -8,14 +8,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import br.senac.redditcover.R
 import br.senac.redditcover.model.Post
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.firebase.ui.database.ObservableSnapshotArray
-import kotlinx.android.extensions.LayoutContainer
+
 import kotlinx.android.synthetic.main.card_post_category.view.*
-import kotlinx.android.synthetic.main.post_card.view.*
-import kotlinx.android.synthetic.main.post_card.view.favoriteCheckBox
-import kotlinx.android.synthetic.main.post_card_all.view.*
+
 
 class CustomAdapter(
     private var posts: List<Post>
@@ -41,7 +36,7 @@ class CustomAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvName.text = posts[position].name
-        holder.tvDescription.text = posts[position].category?.name
+        holder.tvDescription.text = posts[position].description
         items.add(holder.card)
     }
 

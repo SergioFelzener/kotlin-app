@@ -21,11 +21,11 @@ class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdap
         fun bind(post: Post){
             containerView.postName.text = post.name
             containerView.postDescription.text = post.description
-            containerView.favoriteCheckBox.isChecked = post.liked
+            containerView.checkBoxPost.isChecked = post.liked
             containerView.deleteIcon.setOnClickListener {
                 snapshots.getSnapshot(adapterPosition).ref.removeValue()
             }
-            containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
+            containerView.checkBoxPost.setOnCheckedChangeListener { button, isChecked ->
                 snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
             }
         }
