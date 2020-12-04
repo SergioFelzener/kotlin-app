@@ -1,8 +1,11 @@
 package br.senac.redditcover.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.senac.redditcover.R
 import br.senac.redditcover.model.Post
@@ -14,36 +17,32 @@ import kotlinx.android.synthetic.main.post_card.view.*
 import kotlinx.android.synthetic.main.post_card.view.favoriteCheckBox
 import kotlinx.android.synthetic.main.post_card_all.view.*
 
-class CustomAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdapter<Post, CustomAdapter.CustomAdapterViewHolder>(options) {
+class CustomAdapter(var context: Context, var posts: List<Post>): BaseAdapter() {
+    override fun getCount(): Int {
+        return posts.size
+    }
 
-
-    class CustomAdapterViewHolder(override val containerView: View, val snapshots: ObservableSnapshotArray<Post>)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-        fun bind(post: Post){
-            containerView.postName.text = post.name
-            containerView.postDescription.text = post.description
-            containerView.favoriteCheckBox.isChecked = post.isLiked
-            containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
-                snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
-            }
-            containerView.deleteIcon.setOnClickListener {
-                snapshots.getSnapshot(adapterPosition).ref.removeValue()
-            }
-
-        }
-
+    override fun getItem(position: Int): Any {
+        return posts[position]
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  CustomAdapterViewHolder{
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.post_card, parent,false)
-        return CustomAdapterViewHolder(view, snapshots)
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+
     }
 
-    override fun onBindViewHolder(holder: CustomAdapterViewHolder, position: Int, post: Post) {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        holder.bind(post)
+        var view: View = View.inflate(context, R.layout.post_card, null)
+        var namePost: TextView = view.postName
+        var descPost: TextView = view.postDescription
+
+        var listItem: Post = posts[position]
+
+        namePost.text = listItem.name
+        descPost.text = listItem.description
+
+        return view
     }
 }

@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RedditCover">
-        <activity android:name=".activities.AddPostActivity"></activity>
+        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.CategoriesActivity" />
+        <activity android:name=".activities.AllPostsActivity" />
+        <activity android:name=".activities.MyPostsActivity" />
+        <activity android:name=".activities.AddPostActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.RoomPostActivity" />
         <activity android:name=".activities.MainActivity" />

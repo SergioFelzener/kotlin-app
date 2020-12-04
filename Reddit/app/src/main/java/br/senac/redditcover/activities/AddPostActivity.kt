@@ -102,7 +102,7 @@ class AddPostActivity : AppCompatActivity(){
         // if user logged in get firebase reference
         user?.let{
             //Reference is only the current user -> .child(user.id)
-            database = FirebaseDatabase.getInstance().reference.child(it.uid)
+            database = FirebaseDatabase.getInstance().reference
 
             val firebaseDataEventListener = object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {

@@ -27,7 +27,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class CategoriesFragment : Fragment() {
 
-    private var categoriesAdapter: CategoriesAdapter? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         RetrofitClient.instance.getCategories()
             .enqueue(object : Callback<List<Category>> {
@@ -42,7 +41,7 @@ class CategoriesFragment : Fragment() {
                     }
 
                     if (category.isNotEmpty()){
-                        categoriesAdapter = CategoriesAdapter(requireContext(), category)
+                        var categoriesAdapter = CategoriesAdapter(requireContext(), category)
                         this@CategoriesFragment.grid_categories.adapter = categoriesAdapter
                     }
 

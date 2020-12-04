@@ -22,9 +22,9 @@ class PostsAdapter(options: FirebaseRecyclerOptions<Post>): FirebaseRecyclerAdap
             containerView.postNane.text = post.name
             containerView.tvPostDescription.text = post.description
             containerView.favoriteCheckBox.isChecked = post.isLiked
-            containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
-                snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
-            }
+//            containerView.favoriteCheckBox.setOnCheckedChangeListener { button, isChecked ->
+//                snapshots.getSnapshot(adapterPosition).ref.child("liked")?.setValue(isChecked)
+//            }
         }
 
     }
