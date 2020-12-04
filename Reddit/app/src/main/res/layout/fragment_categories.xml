@@ -11,15 +11,21 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
         android:text="@string/titleCategory"
+        android:textAlignment="textStart"
+        android:textColor="#222222"
         android:textSize="25dp"
-        android:textAlignment="center"/>
+        android:textStyle="bold" />
 
     <GridView
         android:id="@+id/grid_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
         android:columnWidth="150dp"
         android:horizontalSpacing="15dp"
         android:numColumns="auto_fit"
